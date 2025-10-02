@@ -1,5 +1,5 @@
 import 'package:ayur_project/constants/app_colors.dart';
-import 'package:ayur_project/modules/login/screens/register_screen.dart';
+import 'package:ayur_project/modules/home/screens/home_screen.dart';
 import 'package:ayur_project/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,8 +17,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController username = TextEditingController(
+    text: "test_user"
+  );
+  TextEditingController password = TextEditingController(
+    text: "12345678"
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return AppButton(text: "Login", onTap: () async {
                           await context.read<LoginViewModel>().tryLogin(username.text, password.text).then((value) {
                             if (value) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                             } else {
                               Utils.showInSnackBar(context, "Login Failed");
                             }

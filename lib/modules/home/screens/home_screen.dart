@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {},
             isLoaderEnabled: false,
             width: MediaQuery.of(context).size.width * 0.23,
-            textStyle: AppTextStyles.poppinsMedium(16),
+            textStyle: AppTextStyles.poppinsMedium(16,color: AppColors.white),
           )
         ],
       ),

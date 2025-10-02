@@ -1,3 +1,4 @@
+import 'package:ayur_project/constants/app_configs.dart';
 import 'package:ayur_project/constants/string_constants.dart';
 import 'package:ayur_project/utils/shared_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ class LoginViewModel extends ChangeNotifier {
     if(response == null || (response.status == false)){
       return false;
     } else {
+      AppConfigs.appToken = response.token ?? "";
       SharedUtils.setString(StringConstants.appToken, response.token ?? "");
       return true;
     }
