@@ -8,13 +8,10 @@ import 'package:http/http.dart' as http;
 
 class HomeService{
   static Future<PatientResponseModel?> fetchPatientList() async {
-    final Map<String, String> headers = {
-      "Content-Type": "application/json",
-      'Authorization': 'Bearer ${AppConfigs.appToken}',
-    };
+
     final response = await http.get(
       Uri.parse(ApiUrls.patientList),
-      headers: headers
+      headers: AppConfigs.headers
     );
     debugPrint("PatientList Response status code : ${response.statusCode}");
     log("PatientList Response: ${response.body.toString()}");

@@ -9,7 +9,7 @@ class HomeViewModel extends ChangeNotifier{
   Future<void> getPatientList() async {
     setLoader(true);
     final response = await HomeService.fetchPatientList();
-    if(response == null) return;
+    if(response == null || (response.patient?.isEmpty ?? true)) return;
     patientList = response.patient;
     setLoader(false);
   }

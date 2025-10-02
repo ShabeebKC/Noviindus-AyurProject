@@ -7,8 +7,10 @@ class AppColors{
   static const Color grey = Colors.grey;
 
   static const Color primary = Color(0xFF006837);
+  static const Color secondary = Color(0xFF76CA84);
   static const Color fieldBorder = Color(0xFFD9D9D9);
   static const Color blueText = Color(0xFF0028FC);
   static const Color greyText = Color(0xFF404040);
   static const Color greyBg = Color(0xFFF1F1F1);
+  static const Color lightRed = Color(0xFFF21E1E);
 }

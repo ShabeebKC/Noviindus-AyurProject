@@ -1,5 +1,4 @@
 import 'package:ayur_project/constants/app_colors.dart';
-import 'package:ayur_project/constants/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -7,7 +6,8 @@ class AppButton extends StatelessWidget {
   final void Function()? onTap;
   final bool isLoaderEnabled;
   final double width;
-  final double textSize;
+  final TextStyle textStyle;
+  final Color color;
 
   const AppButton({
     super.key,
@@ -15,7 +15,13 @@ class AppButton extends StatelessWidget {
     required this.onTap,
     required this.isLoaderEnabled,
     this.width = double.infinity,
-    this.textSize = 20
+    this.textStyle = const TextStyle(
+        color: AppColors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        fontFamily: "PoppinsMedium"
+    ),
+    this.color = AppColors.primary
   });
 
   @override
@@ -28,7 +34,7 @@ class AppButton extends StatelessWidget {
         height: 50,
         width: width,
         decoration: BoxDecoration(
-          color: AppColors.primary,
+          color: color,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
@@ -36,7 +42,7 @@ class AppButton extends StatelessWidget {
                   ? CircularProgressIndicator(color: AppColors.white)
                   : Text(
                     text,
-                    style: AppTextStyles.poppinsMedium(textSize, color: AppColors.white,),
+                    style: textStyle,
                   ),
         ),
       ),

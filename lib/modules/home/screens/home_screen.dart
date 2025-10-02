@@ -3,6 +3,7 @@ import 'package:ayur_project/constants/app_resources.dart';
 import 'package:ayur_project/constants/app_styles.dart';
 import 'package:ayur_project/modules/home/view_model/home_view_model.dart';
 import 'package:ayur_project/modules/login/screens/register_screen.dart';
+import 'package:ayur_project/modules/login/view_models/register_view_model.dart';
 import 'package:ayur_project/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +23,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) => _fetchList());
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _fetchList();
+      context.read<RegisterViewModel>().getBranches();
+      context.read<RegisterViewModel>().getTreatments();
+    });
     super.initState();
   }
 
@@ -105,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {},
             isLoaderEnabled: false,
             width: MediaQuery.of(context).size.width * 0.23,
-            textSize: 16,
+            textStyle: AppTextStyles.poppinsMedium(16),
           )
         ],
       ),

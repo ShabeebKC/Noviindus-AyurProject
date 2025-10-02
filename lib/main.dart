@@ -1,3 +1,4 @@
+import 'package:ayur_project/modules/login/view_models/register_view_model.dart';
 import 'package:ayur_project/utils/shared_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => LoginViewModel()),
         ChangeNotifierProvider(create: (context) => HomeViewModel()),
+        ChangeNotifierProvider(create: (context) => RegisterViewModel()),
       ],
       child: MaterialApp(
         title: 'Ayur-Noviindus',

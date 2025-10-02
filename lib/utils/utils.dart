@@ -28,4 +28,10 @@ class Utils{
     String formattedDate = DateFormat('dd/MM/yyyy').format(newDate);
     return formattedDate;
   }
+
+  static String formatTime(TimeOfDay time) {
+    final now = DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
+    return DateFormat('hh:mm a').format(dt);
+  }
 }
