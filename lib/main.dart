@@ -1,8 +1,9 @@
-import 'package:ayur_project/screens/splash_screen.dart';
 import 'package:ayur_project/utils/shared_utils.dart';
-import 'package:ayur_project/view_models/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'modules/home/screens/splash_screen.dart';
+import 'modules/home/view_model/home_view_model.dart';
+import 'modules/login/view_models/login_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginViewModel()),
+        ChangeNotifierProvider(create: (context) => HomeViewModel()),
       ],
       child: MaterialApp(
         title: 'Ayur-Noviindus',

@@ -6,12 +6,16 @@ class AppButton extends StatelessWidget {
   final String text;
   final void Function()? onTap;
   final bool isLoaderEnabled;
+  final double width;
+  final double textSize;
 
   const AppButton({
     super.key,
     required this.text,
     required this.onTap,
     required this.isLoaderEnabled,
+    this.width = double.infinity,
+    this.textSize = 20
   });
 
   @override
@@ -22,7 +26,7 @@ class AppButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 50,
-        width: double.infinity,
+        width: width,
         decoration: BoxDecoration(
           color: AppColors.primary,
           borderRadius: BorderRadius.circular(10),
@@ -32,7 +36,7 @@ class AppButton extends StatelessWidget {
                   ? CircularProgressIndicator(color: AppColors.white)
                   : Text(
                     text,
-                    style: AppTextStyles.poppinsMedium(20, color: AppColors.white,),
+                    style: AppTextStyles.poppinsMedium(textSize, color: AppColors.white,),
                   ),
         ),
       ),

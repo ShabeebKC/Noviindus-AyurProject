@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:ayur_project/constants/api_urls.dart';
-import 'package:ayur_project/models/login_response_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import '../models/login_response_model.dart';
 
 class LoginService{
   static Future<LoginResponseModel?> login(String username, String password) async {

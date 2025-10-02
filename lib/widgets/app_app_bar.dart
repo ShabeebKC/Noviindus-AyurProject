@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../constants/app_colors.dart';
 import '../constants/app_resources.dart';
 
 class AppAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -8,10 +9,14 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const SizedBox(),
+      title: const SizedBox.shrink(),
+      shadowColor: AppColors.white,
+      surfaceTintColor: AppColors.white,
+      backgroundColor: AppColors.white,
+      elevation: 0,
       actions: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: SvgPicture.asset(AppResources.bellIcon, width: 23, height: 23,),
         ),
       ],

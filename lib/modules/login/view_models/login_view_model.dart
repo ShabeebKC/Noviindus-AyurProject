@@ -1,7 +1,7 @@
 import 'package:ayur_project/constants/string_constants.dart';
-import 'package:ayur_project/services/login_service.dart';
 import 'package:ayur_project/utils/shared_utils.dart';
 import 'package:flutter/cupertino.dart';
+import '../services/login_service.dart';
 
 class LoginViewModel extends ChangeNotifier {
 

@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:ayur_project/constants/app_configs.dart';
 import 'package:ayur_project/constants/app_resources.dart';
 import 'package:ayur_project/constants/string_constants.dart';
-import 'package:ayur_project/screens/register_screen.dart';
 import 'package:ayur_project/utils/shared_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../constants/app_colors.dart';
+import '../../../constants/app_colors.dart';
+import '../../login/screens/login_screen.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const RegisterScreen()),
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
         );
       }
     });

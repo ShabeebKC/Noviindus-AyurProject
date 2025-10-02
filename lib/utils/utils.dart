@@ -1,6 +1,7 @@
 import 'package:ayur_project/constants/app_colors.dart';
 import 'package:ayur_project/constants/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Utils{
 
@@ -19,5 +20,12 @@ class Utils{
           ),
         ))
     );
+  }
+
+  static formatDate(String date) {
+    String dateString = date.toString();
+    DateTime newDate = DateTime.parse(dateString.replaceAll('T', ' '));
+    String formattedDate = DateFormat('dd/MM/yyyy').format(newDate);
+    return formattedDate;
   }
 }

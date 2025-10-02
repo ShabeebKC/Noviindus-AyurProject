@@ -1,13 +1,13 @@
 import 'package:ayur_project/constants/app_colors.dart';
-import 'package:ayur_project/screens/register_screen.dart';
+import 'package:ayur_project/modules/login/screens/register_screen.dart';
 import 'package:ayur_project/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import '../constants/app_resources.dart';
-import '../constants/app_styles.dart';
+import '../../../constants/app_resources.dart';
+import '../../../constants/app_styles.dart';
+import '../../../widgets/app_button.dart';
 import '../view_models/login_view_model.dart';
-import '../widgets/app_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

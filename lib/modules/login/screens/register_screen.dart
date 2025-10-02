@@ -1,7 +1,7 @@
 import 'package:ayur_project/constants/app_styles.dart';
 import 'package:flutter/material.dart';
-import '../constants/app_colors.dart';
-import '../widgets/app_app_bar.dart';
+import '../../../constants/app_colors.dart';
+import '../../../widgets/app_app_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
