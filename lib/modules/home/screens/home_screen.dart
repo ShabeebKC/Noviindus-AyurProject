@@ -21,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -66,9 +67,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         : (patientList.patientList?.isNotEmpty ?? false)
                         ? SizedBox(height: MediaQuery.of(context).size.height / 1.5,
                       child: ListView.builder(
-                          itemCount: patientList.patientList?.length,
+                          itemCount: (patientList.searchedList.isEmpty)
+                              ? patientList.patientList!.length
+                              : patientList.searchedList.length,
                           itemBuilder: (context, index) {
-                            final patient = patientList.patientList?[index];
+                            final patient = (patientList.searchedList.isEmpty)
+                                ? patientList.patientList![index]
+                                : patientList.searchedList[index];
                             return _renderListItem(patient);
                           }),
                     ) : _renderListEmpty();
@@ -149,14 +154,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   prefixIcon: Icon(Icons.search, size: 20, color: AppColors.grey,),
                   hintStyle: AppTextStyles.poppinsRegular(14, color: AppColors.grey)
               ),
+              controller: searchController,
             ),
           ),
-          AppButton(
-            text: 'Search',
-            onTap: () {},
-            isLoaderEnabled: false,
-            width: MediaQuery.of(context).size.width * 0.23,
-            textStyle: AppTextStyles.poppinsMedium(16,color: AppColors.white),
+          Consumer<HomeViewModel>(
+            builder: (context, search, child) {
+              return AppButton(
+                text: search.searchedList.isEmpty ? 'Search' : "Clear",
+                onTap: () {
+                  if(search.searchedList.isEmpty){
+                    context.read<HomeViewModel>().renderSearch(searchController.text);
+                  } else {
+                    context.read<HomeViewModel>().renderSearch("");
+                    searchController.text = "";
+                  }
+                },
+                isLoaderEnabled: false,
+                width: MediaQuery.of(context).size.width * 0.23,
+                textStyle: AppTextStyles.poppinsMedium(16,color: AppColors.white),
+              );
+            }
           )
         ],
       ),

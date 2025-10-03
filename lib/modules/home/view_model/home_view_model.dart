@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class HomeViewModel extends ChangeNotifier{
   List<Patient>? patientList;
+  List<Patient> searchedList= [];
   bool isLoading = false;
   bool isAscending = false;
 
@@ -23,6 +24,22 @@ class HomeViewModel extends ChangeNotifier{
       final dateB = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
       return isAscending ? dateB.compareTo(dateA) : dateA.compareTo(dateB);
     });
+    notifyListeners();
+  }
+
+  void renderSearch(String enteredKeyword) {
+    searchedList.clear();
+    if (enteredKeyword.isEmpty) {
+      notifyListeners();
+      return;
+    } else {
+      patientList?.forEach((element) {
+        if (element.patientDetailsSet?.isNotEmpty == true &&
+            element.patientDetailsSet!.first.treatmentName.toString().toLowerCase().contains(enteredKeyword.toLowerCase())) {
+          searchedList.add(element);
+        }
+      });
+    }
     notifyListeners();
   }
 
