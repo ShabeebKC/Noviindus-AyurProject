@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 
 class HomeService{
   static Future<PatientResponseModel?> fetchPatientList() async {
-
     final response = await http.get(
       Uri.parse(ApiUrls.patientList),
       headers: AppConfigs.headers

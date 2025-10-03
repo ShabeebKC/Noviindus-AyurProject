@@ -15,7 +15,7 @@ class RegisterService{
         headers: AppConfigs.headers
     );
     debugPrint("BranchList Response status code : ${response.statusCode}");
-    log("BranchList Response: ${response.body.toString()}");
+    debugPrint("BranchList Response: ${response.body.toString()}");
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       return BranchResponseModel.fromJson(responseJson);
@@ -34,7 +34,7 @@ class RegisterService{
         headers: AppConfigs.headers
     );
     debugPrint("TreatmentList Response status code : ${response.statusCode}");
-    log("TreatmentList Response: ${response.body.toString()}");
+    debugPrint("TreatmentList Response: ${response.body.toString()}");
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       return TreatmentResponseModel.fromJson(responseJson);

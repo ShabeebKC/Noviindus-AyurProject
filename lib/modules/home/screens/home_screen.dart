@@ -5,6 +5,7 @@ import 'package:ayur_project/modules/home/view_model/home_view_model.dart';
 import 'package:ayur_project/modules/login/screens/register_screen.dart';
 import 'package:ayur_project/modules/login/view_models/register_view_model.dart';
 import 'package:ayur_project/widgets/app_app_bar.dart';
+import 'package:ayur_project/widgets/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -60,32 +61,77 @@ class _HomeScreenState extends State<HomeScreen> {
               const Divider(height: 30,),
               Consumer<HomeViewModel>(
                   builder: (context, patientList, child) {
-                    return (patientList.patientList?.isNotEmpty ?? false) ? SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.5,
+                    return patientList.patientList == null
+                        ? _renderLoader()
+                        : (patientList.patientList?.isNotEmpty ?? false)
+                        ? SizedBox(height: MediaQuery.of(context).size.height / 1.5,
                       child: ListView.builder(
                           itemCount: patientList.patientList?.length,
                           itemBuilder: (context, index) {
                             final patient = patientList.patientList?[index];
                             return _renderListItem(patient);
                           }),
-                    ) : Center(
-                      child: Column(
-                        children: [
-                          Text("No Patients Listed",
-                            style: AppTextStyles.poppinsMedium(20)
-                          ),
-                          Text("Swip Down to Refresh",
-                            style: AppTextStyles.poppinsRegular(12, color: AppColors.blueText)
-                          ),
-                        ],
-                      ),
-                    );
+                    ) : _renderListEmpty();
                   }
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _renderListEmpty(){
+    return  Center(
+      child: Column(
+        children: [
+          Text("No Patients Listed",
+              style: AppTextStyles.poppinsMedium(20)
+          ),
+          Text("Swip Down to Refresh",
+              style: AppTextStyles.poppinsRegular(12, color: AppColors.blueText)
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _renderLoader(){
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 1.5,
+      child: ListView.builder(
+          itemCount: 7,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: const EdgeInsets.fromLTRB(18, 0, 18, 8),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 4),
+              decoration: BoxDecoration(
+                color: AppColors.greyBg,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerWidget(height: 20, width: 70,),
+                  const SizedBox(height: 7,),
+                  ShimmerWidget(width: 150, height: 30,),
+                  const SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      ...[
+                        const SizedBox(width: 5,),
+                        ShimmerWidget(height: 20, width: 50,),
+                      ],
+                      Spacer(),
+                      const SizedBox(width: 5,),
+                      ShimmerWidget(height: 20, width: 50,),
+                    ],
+                  ),
+                  const SizedBox(height: 20,)
+                ],
+              ),
+            );
+          }),
     );
   }
 
@@ -124,21 +170,28 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text("Sort By", style: AppTextStyles.poppinsMedium(20,color: AppColors.greyText)),
-          Container(
-            padding: EdgeInsets.fromLTRB(18, 4, 5, 4),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(
-                    color: AppColors.grey
-                )
-            ),
-            child: Row(
-              children: [
-                Text("Date", style: AppTextStyles.poppinsRegular(16),),
-                const SizedBox(width: 40),
-                Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.primary,)
-              ],
-            ),
+          Consumer<HomeViewModel>(
+            builder: (context, sort, child) {
+              return InkWell(
+                onTap: () => context.read<HomeViewModel>().sortPatientsByDate(!sort.isAscending),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(18, 4, 5, 4),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(
+                          color: AppColors.grey
+                      )
+                  ),
+                  child: Row(
+                    children: [
+                      Text("Date", style: AppTextStyles.poppinsRegular(16),),
+                      const SizedBox(width: 40),
+                      Icon(sort.isAscending ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded, color: AppColors.primary,)
+                    ],
+                  ),
+                ),
+              );
+            }
           )
         ],
       ),
