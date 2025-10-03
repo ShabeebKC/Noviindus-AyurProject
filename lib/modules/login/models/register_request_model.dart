@@ -4,16 +4,16 @@ class RegisterRequestModel {
   String payment;
   String phone;
   String address;
-  double totalAmount;
-  double discountAmount;
-  double advanceAmount;
-  double balanceAmount;
+  int totalAmount;
+  int discountAmount;
+  int advanceAmount;
+  int balanceAmount;
   String dateAndTime;
   String id;
-  String male;
-  String female;
+  List<int?> male;
+  List<int?> female;
   String branch;
-  String treatments;
+  List<int?> treatments;
 
   RegisterRequestModel({
     required this.name,
@@ -40,16 +40,16 @@ class RegisterRequestModel {
       "payment": payment,
       "phone": phone,
       "address": address,
-      "total_amount": totalAmount,
-      "discount_amount": discountAmount,
-      "advance_amount": advanceAmount,
-      "balance_amount": balanceAmount,
+      "total_amount": totalAmount.toString(),
+      "discount_amount": discountAmount.toString(),
+      "advance_amount": advanceAmount.toString(),
+      "balance_amount": balanceAmount.toString(),
       "date_nd_time": dateAndTime,
       "id": id,
-      "male": male,
-      "female": female,
+      "male": male.whereType<int>().join(','),
+      "female": female.whereType<int>().join(','),
       "branch": branch,
-      "treatments": treatments,
+      "treatments": treatments.whereType<int>().join(','),
     };
   }
 }

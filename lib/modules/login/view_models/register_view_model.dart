@@ -91,24 +91,21 @@ class RegisterViewModel extends ChangeNotifier{
   }
 
 
-  Future<void> registerPatient(String name, String whNumber, String address, (String, String, String, String) amounts) async {
+  Future<bool> registerPatient(String name, String whNumber, String address, (String, String, String, String) amounts) async {
     setLoader(true);
-    final total = double.tryParse(amounts.$1) ?? 0;
-    final discount = double.tryParse(amounts.$2) ?? 0;
-    final advance = double.tryParse(amounts.$3) ?? 0;
-    final balance = double.tryParse(amounts.$4) ?? 0;
+    final int total = (double.tryParse(amounts.$1) ?? 0).toInt();
+    final int discount = (double.tryParse(amounts.$2) ?? 0).toInt();
+    final int advance = (double.tryParse(amounts.$3) ?? 0).toInt();
+    final int balance = (double.tryParse(amounts.$4) ?? 0).toInt();
 
-    final maleBuffer = StringBuffer();
-    final femaleBuffer = StringBuffer();
-    final treatmentBuffer = StringBuffer();
+    List<int?> totalMale = [];
+    List<int?> totalFemale = [];
+    List<int?> totalTreatment = [];
     for (final item in bookedTreatments) {
-      maleBuffer.write("${item.maleCount},");
-      femaleBuffer.write("${item.femaleCount},");
-      treatmentBuffer.write("${item.treatments?.id},");
+      totalMale.add(item.maleCount);
+      totalFemale.add(item.femaleCount);
+      totalTreatment.add(item.treatments?.id);
     }
-    final totalMaleCount = maleBuffer.toString();
-    final totalFemaleCount = femaleBuffer.toString();
-    final treatmentIds = treatmentBuffer.toString();
 
     final request = RegisterRequestModel(
         name: name,
@@ -121,14 +118,17 @@ class RegisterViewModel extends ChangeNotifier{
         advanceAmount: advance,
         balanceAmount: balance,
         dateAndTime: "${Utils.formatDate(date.toString())}-${Utils.formatTime(time)}",
-        male: totalMaleCount,
-        female: totalFemaleCount,
+        male: totalMale,
+        female: totalFemale,
         branch: selectedBranch?.id.toString() ?? "",
-        treatments: treatmentIds
+        treatments: totalTreatment
     );
-    await RegisterService.registerPatient(request).then((value) {
-      setLoader(false);
-      if(value == null) return;
-    });
+    final response = await RegisterService.registerPatient(request);
+    setLoader(false);
+    if(response != null || response?.status == true){
+      return true;
+    } else {
+      return false;
+    }
   }
 }

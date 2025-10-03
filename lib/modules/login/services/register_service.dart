@@ -7,6 +7,7 @@ import '../../../constants/api_urls.dart';
 import '../../../constants/app_configs.dart';
 import '../models/branch_response_model.dart';
 import '../models/treatment_response_model.dart';
+import '../models/update_patient_response.dart';
 
 class RegisterService{
   static Future<BranchResponseModel?> fetchBranches() async {
@@ -47,26 +48,31 @@ class RegisterService{
     return null;
   }
 
-  static Future<dynamic> registerPatient(RegisterRequestModel request) async {
+  static Future<UpdatePatientResponse?> registerPatient(RegisterRequestModel request) async {
     log(request.toJson().toString());
+
     final response = await http.post(
-        body: jsonEncode(request.toJson()),
-        headers: {
-          'Authorization': 'Bearer ${AppConfigs.appToken}',
-        },
-        Uri.parse(ApiUrls.registerPatient),
+      Uri.parse(ApiUrls.registerPatient),
+      headers: {
+        'Authorization': 'Bearer ${AppConfigs.appToken}',
+      },
+      body: request.toJson(),
+      encoding: Encoding.getByName('application/x-www-form-urlencoded'),
     );
+
     debugPrint("RegisterPatient Response status code : ${response.statusCode}");
-    log("RegisterPatient Response: ${response.body.toString()}");
+    debugPrint("RegisterPatient Response: ${response.body.toString()}");
+
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
-      return TreatmentResponseModel.fromJson(responseJson);
-    }
-    if (response.statusCode == 401) {
-      log("RegisterPatient Response status code : ${response.statusCode}");
-    }else {
+      return UpdatePatientResponse.fromJson(responseJson);
+    } else if (response.statusCode == 401) {
+      debugPrint("Unauthorized - RegisterPatient Response status code : ${response.statusCode}");
+      return null;
+    } else {
+      debugPrint("RegisterPatient failed with status code: ${response.statusCode}");
       return null;
     }
-    return null;
   }
+
 }
