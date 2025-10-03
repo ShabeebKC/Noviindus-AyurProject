@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../constants/app_colors.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/app_app_bar.dart';
+import '../../reciept/screens/reciept_screen.dart';
 import '../models/branch_response_model.dart';
 import '../models/treatment_response_model.dart';
 import '../view_models/register_view_model.dart';
@@ -38,12 +39,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: Consumer<RegisterViewModel>(
           builder: (context, loading, child) {
-            return AppButton(text: "Save", onTap: () {
+            return AppButton(text: "Save", onTap: () async {
               final nm = name.text;
               final wh = whNumber.text;
               final add = address.text;
               final amount = (totalAmount.text,discountAmount.text,advanceAmount.text,balanceAmount.text);
-              context.read<RegisterViewModel>().registerPatient(nm,wh,add,amount);
+              await context.read<RegisterViewModel>().registerPatient(nm,wh,add,amount).then((value) {
+                if(value){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ReceiptPage()),
+                  );
+                } else {
+                  Utils.showInSnackBar(context, "Failed to create user");
+                }
+              },);
             }, isLoaderEnabled: loading.isLoading);
           }
         ),
@@ -56,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: const EdgeInsets.only(left: 18.0,top: 10),
             child: Text("Register", style: AppTextStyles.poppinsMedium(25)),
           ),
-          Divider(height: 25),
+          const Divider(height: 25),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(

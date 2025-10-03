@@ -21,6 +21,7 @@ class RegisterViewModel extends ChangeNotifier{
   TimeOfDay time = TimeOfDay.now();
   DateTime date = DateTime.now();
   bool isLoading = false;
+  RegisterRequestModel? request;
 
   void getBranches() async {
     await RegisterService.fetchBranches().then((value) {
@@ -107,7 +108,7 @@ class RegisterViewModel extends ChangeNotifier{
       totalTreatment.add(item.treatments?.id);
     }
 
-    final request = RegisterRequestModel(
+    request = RegisterRequestModel(
         name: name,
         executive: selectedLocation,
         payment: selectedPaymentOption ?? "",
@@ -123,7 +124,8 @@ class RegisterViewModel extends ChangeNotifier{
         branch: selectedBranch?.id.toString() ?? "",
         treatments: totalTreatment
     );
-    final response = await RegisterService.registerPatient(request);
+    notifyListeners();
+    final response = await RegisterService.registerPatient(request!);
     setLoader(false);
     if(response != null || response?.status == true){
       return true;
